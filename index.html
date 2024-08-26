@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Video Background with Typewriter Effect</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        body,
+        html {
+            height: 100%;
+            width: 100%;
+            font-family: 'Arial', sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .video-container {
+            position: absolute;
+            top: 0;
+            left: 0;
+            height: 100%;
+            width: 100%;
+            overflow: hidden;
+            z-index: -1;
+        }
+
+        video {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            min-width: 100%;
+            min-height: 100%;
+            width: auto;
+            height: auto;
+            transform: translate(-50%, -50%);
+            object-fit: cover;
+            z-index: -1;
+        }
+
+        .content {
+            text-align: center;
+            color: white;
+        }
+
+        .typewriter {
+            font-size: 3em;
+            white-space: nowrap;
+            border-right: 2px solid;
+            overflow: hidden;
+            animation: blink-caret 0.50s step-end infinite;
+        }
+
+        @keyframes blink-caret {
+            from,
+            to {
+                border-color: transparent;
+            }
+
+            50% {
+                border-color: white;
+            }
+        }
+
+        p {
+            font-size: 1.2em;
+            margin-top: 20px;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="video-container">
+        <video autoplay muted loop>
+            <source src="input.mp4" type="video/mp4">
+            Your browser does not support the video tag.
+        </video>
+    </div>
+    <div class="content">
+        <div class="Typewriter__wrapper">
+            <span class="typewriter" id="typewriter-text"></span>
+        </div>
+        <p>ID : MARS_1010</p>
+    </div>
+
+    <script>
+        const textArray = ["UNDER","PROGRESS",".",".","!"];
+        let currentWordIndex = 0;
+        let currentLetterIndex = 0;
+        const typewriterElement = document.getElementById('typewriter-text');
+
+        function typeWord() {
+            const currentWord = textArray[currentWordIndex];
+            if (currentLetterIndex < currentWord.length) {
+                typewriterElement.textContent += currentWord[currentLetterIndex];
+                currentLetterIndex++;
+                setTimeout(typeWord, 200);
+            } else {
+                // Move to the next word after a delay
+                setTimeout(() => {
+                    currentLetterIndex = 0;
+                    currentWordIndex++;
+                    if (currentWordIndex < textArray.length) {
+                        typewriterElement.textContent += ' '; 
+                        typeWord();
+                    }
+                }, 500); 
+            }
+        }
+        window.onload = typeWord;
+    </script>
+</body>
+
+</html>
